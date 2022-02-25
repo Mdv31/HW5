@@ -1,7 +1,5 @@
 package api;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import model.Status;
 import model.Ticket;
 import org.testng.annotations.Test;
@@ -15,19 +13,19 @@ public class CreateTicketTest extends BaseTest {
     @Test
     public void createTicketTest() {
         // todo: создать тикет и проверить, что он находится в системе
-        BaseTest.buildNewTicket(Status.OPEN,2);
+        Ticket ticket = BaseTest.buildNewTicket(Status.OPEN,2);
+        createTicket(ticket);
         getTicket(idd);
     }
 
 
-    protected Ticket getTicket(int id) {
+    protected void getTicket(int id) {
         // todo: отправить HTTP запрос на получение тикета по его id
-    given().auth().basic("demo", "demo1234")
+    given().auth().basic("admin", "adminat")
                 .pathParam("id", id)
                 .when()
-                .get("/api/searches/{id}")
+                .get("/api/tickets//{id}")
                 .then()
                 .statusCode(200);
-        return null;
     }
 }
